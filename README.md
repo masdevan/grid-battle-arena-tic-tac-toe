@@ -35,5 +35,3 @@ A modern Tic Tac Toe game built with React and Vite, featuring an AI-powered bot
 ## Gameplay
 
 Players take turns placing their marks on a 3×3 grid. The objective is to align three identical marks horizontally, vertically, or diagonally before the opponent does. The integrated AI bot analyzes the board and responds automatically, creating a challenging and engaging single-player experience.
-
----
