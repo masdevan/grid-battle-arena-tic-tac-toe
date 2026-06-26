@@ -17,11 +17,11 @@ function Square({value, onClick, noBorderRight, noBorderBottom, highlight}) {
       onClick={onClick}
       className="flex items-center justify-center text-base font-medium cursor-pointer transition-colors duration-100"
       style={{
-        width: CELL, height: CELL,
+        width: CELL, height: CELL, boxSizing: 'border-box',
         background: highlight ? '#1a1e1a' : '#0d0d0d',
         color: colorOf(value),
-        borderRight: noBorderRight ? 'none' : '1px solid #1a1a1a',
-        borderBottom: noBorderBottom ? 'none' : '1px solid #1a1a1a',
+        borderRight: noBorderRight ? 'none' : '1px solid rgba(255,255,255,0.15)',
+        borderBottom: noBorderBottom ? 'none' : '1px solid rgba(255,255,255,0.15)',
       }}
       onMouseEnter={(e) => { if (!value) e.target.style.background = highlight ? '#1a1e1a' : '#141414'; }}
       onMouseLeave={(e) => { if (!value) e.target.style.background = highlight ? '#1a1e1a' : '#0d0d0d'; }}
@@ -46,8 +46,8 @@ function Board({squares, onCellClick, size, winLines}) {
   });
 
   return (
-    <div style={{ position: 'relative', border: '1px solid #1a1a1a', width: boardPx, height: boardPx }}>
-      <div className="grid" style={{ gridTemplateColumns: `repeat(${size}, ${CELL}px)`, width: boardPx, lineHeight: 0 }}>
+    <div style={{ position: 'relative', outline: '1px solid rgba(255,255,255,0.15)', width: boardPx, height: boardPx }}>
+      <div className="grid" style={{ gridTemplateColumns: `repeat(${size}, ${CELL}px)`, lineHeight: 0 }}>
         {squares.map((v, i) => (
           <Square key={i} value={v} onClick={() => onCellClick(i)}
             noBorderRight={(i + 1) % size === 0} noBorderBottom={i >= size * (size - 1)}
@@ -277,7 +277,7 @@ export default function Game(){
   const totalMoves = size * size;
 
   return (
-    <div className="flex min-h-screen select-none" style={{ background: '#0a0a0a' }}>
+    <div className="flex min-h-screen select-none">
       <button
         onClick={() => setShowSidebar(!showSidebar)}
         className="md:hidden fixed top-3 left-3 z-50 text-xs px-2 py-1 cursor-pointer"
@@ -286,8 +286,11 @@ export default function Game(){
         {showSidebar ? '✕' : '☰'}
       </button>
 
-      <aside className={`${showSidebar ? 'flex' : 'hidden'} md:flex fixed md:static inset-0 z-40 md:z-auto w-[220px] h-screen pl-6 pt-12 md:pt-8 flex-col shrink-0 border-r border-[#111] bg-[#0a0a0a]`} style={{ gap: 3 }}>
-        <div className="text-[10px] text-[#444] uppercase tracking-wider leading-tight">Grid Battle Arena</div>
+      <aside className={`${showSidebar ? 'flex' : 'hidden'} md:flex fixed md:static inset-0 z-40 md:z-auto w-[220px] h-screen pl-6 pt-12 md:pt-8 flex-col shrink-0 border-r border-white/10`} style={{ gap: 3, background: '#0a0a0a' }}>
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="" className="w-5 h-5" />
+          <div className="text-[10px] text-[#444] uppercase tracking-wider leading-tight">Grid Battle Arena</div>
+        </div>
         <div className="text-[10px] text-[#333] mb-1">{size}×{size} · {mode === 'bot' ? `Bot ${numPlayers}P` : `${numPlayers}P`}</div>
 
         <div className="flex flex-col text-xs" style={{ gap: 2 }}>

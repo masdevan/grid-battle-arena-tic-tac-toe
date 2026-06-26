@@ -6,6 +6,17 @@ body {
   background: #0a0a0a;
   color: #ededed;
   min-height: 100vh;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('/pattern.png') repeat;
+  background-size: 120px 45px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: -1;
 }
 
 ::-webkit-scrollbar {
